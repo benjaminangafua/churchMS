@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+<form action="/newMember" method="post">
+    <label for="name">
+        Name
+        <input type="text" name="name"  placeholder="Full name" autocapitalize="word">
+    </label>
+    <br><br>
+    <label for="gender">
+        Male<input type="radio" name="gender" value="Male">  Female<input type="radio" name="gender" value="Female">
+    </label><br> <br>
+    <label for="location">
+        Location
+        <input type="text" name="location" placeholder="Location" autocapitalize="word">
+    </label> <br><br>
+    <label for="contact">
+        Contact
+        <input type="text" name="contact" placeholder="Contact" autocapitalize="word">
+    </label> <br> <br>
+
+    <label for="maritalStatus">
+        Marital Status
+        <input type="text" name="maritalStatus" placeholder="Marital Status" autocapitalize="word">
+    </label><br> <br>
+    <label for="occupation">
+        Occupation
+        <input type="text" name="occupation" placeholder="Occupation" autocapitalize="word">
+    </label> <br><br>
+    <label for="dateOfBirth">
+        Date of Birth
+        <input  name="dateOfBirth" type="date" max="1999-12-13" placeholder="dd/mm/yy">
+    </label>
+    <br><br>
+    <label for="department">
+        Department
+        <input type="text" name="department" placeholder="Dpartment" autofocus autocomplete="additional-name">
+    </label> <br><br>
+    <label for="position">
+        Position
+        <input type="text" name="position" placeholder="Position" autofocus autocomplete="additional-name">
+    </label>
+    <br><br> 
+    
+    <button type="submit">Submit</button>
+</form>
+
+
+
+{% endblock %}

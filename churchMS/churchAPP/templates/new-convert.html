@@ -1,0 +1,28 @@
+<!-- dashboard inner -->
+{% extends "layout.html" %}
+<!-- main -->
+
+{% block innerContaint %}
+
+<form method="post">
+    <div class="mb-3">
+        <div class="mb-3">
+            <label for="name"> Name</label>
+            <input class="form-control" type="text" name="name" placeholder="Full name" autocapitalize="word">
+        </div>
+
+        <div>
+            <label for="location"> Location</label>
+            <input class="form-control" type="text" name="location" placeholder="Location" autocapitalize="word">
+        </div>
+        <div class="mb-3">
+            <label for="contact">Contact</label>
+            <input class="form-control" type="text" name="contact" placeholder="Contact" autocapitalize="word">
+        </div>
+    </div>
+
+</form>
+
+
+
+new convert {% endblock %}

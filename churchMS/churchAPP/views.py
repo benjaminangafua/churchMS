@@ -5,6 +5,7 @@ from churchAPP import db
 
 views = Blueprint('views', __name__)
 
+# Landing page
 @views.route("/")
 def index():
 
@@ -16,15 +17,33 @@ def index():
     deparmentSum = db.execute('SELECT COUNT(DISTINCT(department)) FROM members')[0]['COUNT(DISTINCT(department))']
 
     if len(data) > 0:
-    
+        # Birthday entry
         this_month = int(db.execute("SELECT strftime('%m','now');")[0]["strftime('%m','now')"])
         this_day = int(db.execute("SELECT strftime('%d','now');")[0]["strftime('%d','now')"])
         birth_record = db.execute(f"SELECT COUNT(*) FROM birthday WHERE month = {this_month}")[0]['COUNT(*)']
         today_birtday = db.execute(f"SELECT COUNT(DISTINCT(name)) FROM birthday WHERE day = {this_day}")[0]['COUNT(DISTINCT(name))']
         
-        print(birth_record)
+        # print(birth_record)
+        # Attendance
+        attendance = int(db.execute("SELECT total_attendance FROM attendance")[0]["total_attendance"])
+        
+        floating_pre = (attendance * 100) / int(memberSum)
+        present_percent = float("{:.2f}".format(floating_pre))
+
+        # print("Presence =================>>>>",present_percent)
+
+        # Absence
+        absence = int(memberSum) - attendance
+        floating = (absence * 100) / int(memberSum)
+        absent_percent = float("{:.2f}".format(floating))
+
+        # print("Absence =================>>>>", absent_percent)
+
         # Member's Section
-        return render_template("index.html", numOfBirthday=birth_record, todayNumOfBirthday=today_birtday, deparmentSum=deparmentSum, memberSum=memberSum)
+        return render_template("index.html", 
+        numOfBirthday=birth_record, todayNumOfBirthday=today_birtday, 
+        deparmentSum=deparmentSum, memberSum=memberSum, attendance=attendance,
+         absence=absence, absent_percent=absent_percent, present_percent=present_percent)
     
     return render_template("index.html", deparmentSum=deparmentSum, memberSum=memberSum)
 
@@ -109,6 +128,7 @@ def d404_error():
 def general():
     return render_template('general_elements.html')
 
+# New member creation
 @views.route('/add-new-member', methods=["GET", "POST"])
 def addNewMember():
     data = db.execute("SELECT * FROM members")
@@ -142,11 +162,8 @@ def addNewMember():
 
             # Check for duplicate
             if len(data) > 0:
-                print("enter 2nd condition----------------->>>>>>>>")
                 if len(DATEOFBIRTH) > 0:
-                    print("outside loop----------------->>>>>>>>")
                     for name in DATEOFBIRTH:
-                        print("enter loop----------------->>>>>>>>")
                         if name["name"]== new["name"]:
 
                             message = "Nam already taken."
@@ -164,6 +181,7 @@ def member():
     members = db.execute("SELECT * FROM members ORDER BY id")
     return render_template("member.html",members=members)
 
+# New convert
 @views.route("/add-new-convert", methods=["GET", "POST"])
 def new_convert():
     if request.method == "POST":
@@ -192,6 +210,7 @@ def convert():
     convert = db.execute("SELECT * FROM new_convert ORDER BY joined_date")
     return render_template("new-convert.html", converts=convert)
 
+# First time visitor
 @views.route("/add-first-timer", methods=["GET", "POST"])
 def first_timer():
     if request.method == "POST":
@@ -207,11 +226,13 @@ def first_timer():
                     message = "Nam already taken."
                     apology(message)
 
-            db.execute("INSERT INTO first_time_visitors(name, contact, location, gender, date_visited) VALUES(?, ?, ?, ?, date('now'))", new["name"], new["contact"], new["location"], new["gender"])
+            db.execute("INSERT INTO first_time_visitors(name, contact, location, gender, date_visited) VALUES(?, ?, ?, ?, date('now'))",
+             new["name"], new["contact"], new["location"], new["gender"])
             return redirect("/vissitor")
 
         else:
-            db.execute("INSERT INTO first_time_visitors(name, contact, location, gender) VALUES(?, ?, ?, ?, date('now'))", new["name"], new["contact"], new["location"], new["gender"])
+            db.execute("INSERT INTO first_time_visitors(name, contact, location, gender) VALUES(?, ?, ?, ?, date('now'))",
+             new["name"], new["contact"], new["location"], new["gender"])
             return redirect("/visitor")
 
     return render_template("add-first-timers.html")
@@ -221,7 +242,7 @@ def visitors():
     visitors_name = db.execute("SELECT * FROM first_time_visitors ORDER BY id")
     return render_template("first-time-visitor.html", visitors_name=visitors_name)
     
-
+# Birthday list
 @views.route("/birthday")
 def birthday():
     
@@ -231,6 +252,34 @@ def birthday():
     birth_rec = db.execute("SELECT * FROM birthday")
         
     return render_template("birthday.html", member=birth_rec, thisMONTH=this_month, months=months)
-    
+
+# attendaance
+# create attendance db
+# insert into attendance db name and date of member
+
+
+@views.route("/new-attendance", methods=["GET", "POST"])
+def takeAttendance():
+    if request.method == "POST":
+
+        num = request.form.getlist("num")
+        totatl_attendance = len(num)
+                
+        # Check for attendance is taken
+        if not num:
+            message = "num field empty."
+            apology(message)
+            
+        # Loop through the attendance , total_attendance=:total, total=totatl_attendance
+        for name in num:
+            
+            db.execute("UPDATE attendance SET name=:name, total_attendance=:total, date=date('now') WHERE id >= 0",total=totatl_attendance,  name=name)
+        
+    member_names = db.execute("SELECT DISTINCT(name), id FROM members")
+
+    return render_template("new-attendance.html", member_names=member_names)
+
+
+# Error message
 def apology(message):
     return render_template("apology.html", message=message)

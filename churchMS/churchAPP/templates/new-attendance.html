@@ -1,7 +1,26 @@
 {% extends "layout.html" %}
 <!-- take attendence -->
-{% block innerContaintr%}
+{% block innerContaint %}
+<form method="post">
 
+    <table>
+        <thead>
+            <th>No.</th>
+            <th>Name</th>
+            <th>Check</th>
+        </thead>
+        <tbody>
+            {% for data in member_names %}
+            <tr>
+                <td>{{data.id}}</td>
+                <td>{{data.name}}</td>
+                <td><input type="checkbox" name="num" id="" value="{{data.id}}"></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="submit" class="btn cur-p btn-primary">Submit</button>
 
+</form>
 <!-- Endblock -->
 {% endblock %}

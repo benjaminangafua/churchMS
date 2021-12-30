@@ -65,3 +65,10 @@ class New_convert(db.Model):
     contact = db.Column(db.String(150))
     location = db.Column(db.String(150))
     date = db.column(db.DateTime(timezone=True))
+
+class Bihdayrt(db.Model):
+    id = db.Column(db.Integer, primary_key=True) 
+    name = db.Column(db.String(150))
+    day  = db.Column(db.Integer)
+    month  = db.Column(db.Integer)
+    member_id = db.Column(db.Integer,  db.ForeignKey('members.id'))

@@ -1,17 +1,32 @@
+from re import S
 from flask import Flask, Blueprint, render_template, request, jsonify, redirect
 from sqlalchemy.sql.expression import join
 from churchAPP import db
 
 views = Blueprint('views', __name__)
 
-# print(db)
-
 @views.route("/")
 def index():
-    memberSum = db.execute('SELECT COUNT(*) FROM members')[0]['COUNT(*)']
-    # print(type(memberSum))
 
-    return render_template("index.html", memberSum=memberSum)
+    # Birthday's section
+    data = db.execute("SELECT * FROM birthday")
+    memberSum = db.execute('SELECT COUNT(*) FROM members')[0]['COUNT(*)']
+    
+    # Department's Section
+    deparmentSum = db.execute('SELECT COUNT(DISTINCT(department)) FROM members')[0]['COUNT(DISTINCT(department))']
+
+    if len(data) > 0:
+    
+        this_month = int(db.execute("SELECT strftime('%m','now');")[0]["strftime('%m','now')"])
+        this_day = int(db.execute("SELECT strftime('%d','now');")[0]["strftime('%d','now')"])
+        birth_record = db.execute(f"SELECT COUNT(*) FROM birthday WHERE month = {this_month}")[0]['COUNT(*)']
+        today_birtday = db.execute(f"SELECT COUNT(DISTINCT(name)) FROM birthday WHERE day = {this_day}")[0]['COUNT(DISTINCT(name))']
+        
+        print(birth_record)
+        # Member's Section
+        return render_template("index.html", numOfBirthday=birth_record, todayNumOfBirthday=today_birtday, deparmentSum=deparmentSum, memberSum=memberSum)
+    
+    return render_template("index.html", deparmentSum=deparmentSum, memberSum=memberSum)
 
 @views.route('/calendar')
 def calendar():
@@ -40,7 +55,6 @@ def email():
 @views.route('/media_gallery')
 def media_gallery():
     return render_template('media_gallery.html')
-
 
 @views.route('/icons')
 def icons():
@@ -91,10 +105,13 @@ def d404_error():
     return render_template('404_error.html')
 
     # Members
+@views.route('/general-element')
+def general():
+    return render_template('general_elements.html')
 
-
-@views.route('/addMember', methods=["GET", "POST"])
+@views.route('/add-new-member', methods=["GET", "POST"])
 def addNewMember():
+    data = db.execute("SELECT * FROM members")
     if request.method == "POST":
         member_data = {}
         member_data["relationship"] = request.form.get("relationship")
@@ -109,16 +126,37 @@ def addNewMember():
         member_data["gender"] =request.form.get("gender")
 
         # print( member_data)
-        data = db.execute("SELECT * FROM members")
-        for name in data:
-           if name["name"]==member_data["name"]:
-                return "Name already exist"
-        
+        if len(data) > 0:
+            for name in data:
+                if name["name"]==member_data["name"]:
+                    message =  "Name already exist"
+                    apology(message)
         db.execute("INSERT INTO members(name, location, department, gender, contact, relationship, occupation, role_play,  date_of_birth, joined_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?,?, date('now'))",
                        member_data["name"], member_data["location"], member_data["department"],  member_data["gender"], member_data["contact"], member_data["relationship"], member_data["occupation"], member_data["role_play"], member_data["date_of_birth"])
         
+        dob = db.execute("SELECT name, strftime('%Y',date_of_birth) as 'Year', strftime('%m',date_of_birth) as 'Month', strftime('%d',date_of_birth) as 'Day'FROM members;")
+       
+        DATEOFBIRTH = db.execute("SELECT * FROM birthday")
+        
+        for new in dob:
+
+            # Check for duplicate
+            if len(data) > 0:
+                print("enter 2nd condition----------------->>>>>>>>")
+                if len(DATEOFBIRTH) > 0:
+                    print("outside loop----------------->>>>>>>>")
+                    for name in DATEOFBIRTH:
+                        print("enter loop----------------->>>>>>>>")
+                        if name["name"]== new["name"]:
+
+                            message = "Nam already taken."
+                            apology(message)
+                        # Insert Date of birth
+                        db.execute("INSERT INTO birthday(name, day, month) VALUES(?, ?, ?)", new["name"], new["Day"], new["Month"])
+            db.execute("INSERT INTO birthday(name, day, month) VALUES(?, ?, ?)", new["name"], new["Day"], new["Month"])
+            
         return redirect("/")
-    return render_template('new-member.html')
+    return render_template('add-new-member.html')
 
 
 @views.route("/member")
@@ -126,47 +164,73 @@ def member():
     members = db.execute("SELECT * FROM members ORDER BY id")
     return render_template("member.html",members=members)
 
-@views.route("/new-convert", methods=["GET", "POST"])
+@views.route("/add-new-convert", methods=["GET", "POST"])
 def new_convert():
     if request.method == "POST":
         new={}
         new["name"]=request.form.get("name")
         new["location"] = request.form.get("location")
         new["contact"] = request.form.get("contact")
+        data = db.execute("SELECT * FROM new_convert")
+        if len(data) > 0:
+            for name in data:
+                if name["name"]== new["name"]:
+                    message = "Nam already taken."
+                    apology(message)
 
+            db.execute("INSERT INTO new_convert(name, contact, location) VALUES(?, ?, ?, date('now'))", new["name"], new["contact"], new["location"])
+            return redirect("/convert")
 
-    data = db.execute("SELECT * FROM new_convert")
-    if len(data) > 0:
-        for name in data:
-            if name["name"]== new["name"]:
-                return "Nam already taken."
+        else:
+            db.execute("INSERT INTO new_convert(name, contact, location) VALUES(?, ?, ?, date('now'))", new["name"], new["contact"], new["location"])
+            return redirect("/convert")
 
-    db.execute("INSERT INTO new_convert(name, contact, location) VALUES(?, ?, ?)")
-    return render_template("new-convert.html")
+    return render_template("add-new-convert.html")
 
+@views.route("/convert")
+def convert():
+    convert = db.execute("SELECT * FROM new_convert ORDER BY joined_date")
+    return render_template("new-convert.html", converts=convert)
 
+@views.route("/add-first-timer", methods=["GET", "POST"])
+def first_timer():
+    if request.method == "POST":
+        new={}
+        new["name"]=request.form.get("name")
+        new["location"] = request.form.get("location")
+        new["contact"] = request.form.get("contact")
+        new["gender"] = request.form.get("gender")
+        data = db.execute("SELECT * FROM first_time_visitors")
+        if len(data) > 0:
+            for name in data:
+                if name["name"]== new["name"]:
+                    message = "Nam already taken."
+                    apology(message)
 
+            db.execute("INSERT INTO first_time_visitors(name, contact, location, gender, date_visited) VALUES(?, ?, ?, ?, date('now'))", new["name"], new["contact"], new["location"], new["gender"])
+            return redirect("/vissitor")
 
-days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-months = ["1", "January","February","March","April", "May","June","July","August","September", "October","November","December"]
+        else:
+            db.execute("INSERT INTO first_time_visitors(name, contact, location, gender) VALUES(?, ?, ?, ?, date('now'))", new["name"], new["contact"], new["location"], new["gender"])
+            return redirect("/visitor")
 
-date = db.execute("SELECT name, strftime('%d',date_of_birth), strftime('%m',date_of_birth) FROM members")
+    return render_template("add-first-timers.html")
 
-
-this_month = int(db.execute("SELECT strftime('%m','now');")[0]["strftime('%m','now')"])
-
-print(months[this_month])
-
-
-person_birth_rec = []
-birth_day = {}
-for datetime in date:
-    birth_day["day"] = datetime["strftime('%d',date_of_birth)"]
-    birth_day["month"] = datetime["strftime('%m',date_of_birth)"]
-    birth_day["name"] = datetime["name"]
-    person_birth_rec.append(birth_day)
+@views.route("/visitor")
+def visitors():
+    visitors_name = db.execute("SELECT * FROM first_time_visitors ORDER BY id")
+    return render_template("first-time-visitor.html", visitors_name=visitors_name)
     
 
-# print(person_birth_rec)
-
-# print("=================>>>>>>>>>>dDD<<<<<<<<<<<<<<<<<++++++++++++++++", month[date])
+@views.route("/birthday")
+def birthday():
+    
+    # Months for birthday
+    months = ["1", "January","February","March","April", "May","June","July","August","September", "October","November","December"]
+    this_month = int(db.execute("SELECT strftime('%m','now');")[0]["strftime('%m','now')"])
+    birth_rec = db.execute("SELECT * FROM birthday")
+        
+    return render_template("birthday.html", member=birth_rec, thisMONTH=this_month, months=months)
+    
+def apology(message):
+    return render_template("apology.html", message=message)

@@ -77,6 +77,10 @@
     outline: none !important;
 }
 
+.center1 {
+    text-align: center;
+}
+
 html,
 body {
     color: #898989;
@@ -114,6 +118,10 @@ body.demos .container-fluid {
     max-width: 1080px
 }
 
+#a {
+    color: #fff !important;
+}
+
 a {
     color: #1f1f1f;
     text-decoration: none !important;
@@ -137,7 +145,6 @@ h6 {
     padding: 0;
     font-weight: normal;
     line-height: normal;
-    color: #1f1f1f;
     margin: 0
 }
 
@@ -560,7 +567,7 @@ a:focus {
     font-weight: 400;
     margin: 0;
     padding-left: 0;
-    color: #15283c;
+    color: #02153f;
     letter-spacing: 0px;
 }
 
@@ -626,7 +633,7 @@ a:focus {
     width: 100%;
     padding-left: 280px;
     z-index: 2;
-    background: #15283c;
+    background: #02153f;
     top: 0;
     transition: ease all 0.3s;
     left: 0;
@@ -754,7 +761,7 @@ a:focus {
 
 .icon_info ul.user_profile_dd li div a {
     font-size: 15px;
-    color: #15283c;
+    color: #02153f;
     padding: 4px 15px;
     border-bottom: none;
     line-height: normal;
@@ -762,7 +769,7 @@ a:focus {
 
 .icon_info ul.user_profile_dd li div a span {
     font-size: 13px;
-    color: #15283c;
+    color: #02153f;
     font-weight: normal;
     padding: 0;
     transition: all .3s ease-in-out;
@@ -824,7 +831,7 @@ span {
 #sidebar {
     min-width: 280px;
     max-width: 280px;
-    background-color: #15283c;
+    background-color: #02153f;
     color: #fff;
     transition: all 0.3s;
     position: relative;
@@ -935,7 +942,7 @@ a[data-toggle="collapse"] {
 .page_title h2 {
     font-size: 20px;
     font-weight: 500;
-    color: #15283c;
+    color: #02153f;
 }
 
 #sidebar.active+#content {
@@ -944,7 +951,7 @@ a[data-toggle="collapse"] {
 
 .topbar .navbar {
     padding: 0;
-    background: #15283c;
+    background: #02153f;
     border: none;
     border-radius: 0;
 }
@@ -1049,7 +1056,7 @@ a[data-toggle="collapse"] {
 }
 
 #sidebar h4 {
-    background: #15283c;
+    background: #02153f;
     margin: 0;
     padding: 21px 25px 19px;
     font-weight: 500;
@@ -1129,7 +1136,7 @@ a[data-toggle="collapse"] {
 
 .couter_icon i {
     color: #fff;
-    font-size: 50px;
+    font-size: 30px;
     line-height: normal;
     width: 100%;
     float: left;
@@ -1142,12 +1149,12 @@ a[data-toggle="collapse"] {
     align-items: center;
     padding: 0;
     float: left;
-    margin: 8px 0 8px;
+    margin: 4px 0 8px;
 }
 
 .couter_icon>div {
     border-right: solid rgba(255, 255, 255, 0.3) 1px;
-    padding-right: 35px;
+    padding-right: 25px;
 }
 
 .counter_no {
@@ -1243,7 +1250,7 @@ a[data-toggle="collapse"] {
     text-transform: none;
     font-weight: 600;
     position: relative;
-    color: #15283c;
+    color: #02153f;
     font-family: 'Raleway', sans-serif;
 }
 
@@ -1358,7 +1365,7 @@ a[data-toggle="collapse"] {
 }
 
 .table_format.strp thead th {
-    background: #15283c;
+    background: #02153f;
     border: none;
     color: #fff;
     vertical-align: middle;
@@ -1467,7 +1474,7 @@ a[data-toggle="collapse"] {
 }
 
 .tw .social_icon {
-    background: #00aced;
+    background: #02153f;
 }
 
 .linked .social_icon {
@@ -1501,14 +1508,12 @@ a[data-toggle="collapse"] {
 .socile_icons .social_cont ul li span {
     float: left;
     width: 100%;
-    color: #99abb4;
     font-size: 17px;
     font-weight: 300;
 }
 
 .socile_icons .social_cont ul li span strong {
     font-weight: 600;
-    color: #455a64;
     font-size: 18px;
 }
 
@@ -1630,7 +1635,7 @@ a[data-toggle="collapse"] {
 #testimonial_slider.carousel .carousel-control i {
     font-size: 20px;
     margin-right: 2px;
-    color: #15283c;
+    color: #02153f;
     margin-top: -2px;
 }
 
@@ -2023,7 +2028,7 @@ button.main_bt {
 
 .widget_progress_bar .progress_no {
     font-size: 24px;
-    color: #15283c;
+    color: #02153f;
     font-weight: 500;
     line-height: normal;
     margin: 0;
@@ -2278,7 +2283,7 @@ i.icon {
 
 .heading_section {
     border-top: solid #1ed085 2px;
-    background: #15283c;
+    background: #02153f;
 }
 
 .heading_section h4 {
@@ -2353,7 +2358,7 @@ h2.invoice_head small {
 }
 
 .invoice_blog h4 {
-    color: #15283c;
+    color: #02153f;
     background: #f8f8f8;
     padding: 15px 20px;
     font-weight: 400;
@@ -2368,7 +2373,7 @@ h2.invoice_head small {
 
 .invoice_blog p strong {
     font-weight: 500;
-    color: #15283c;
+    color: #02153f;
 }
 
 .table_row thead {
@@ -2378,7 +2383,7 @@ h2.invoice_head small {
 .table_row thead tr {
     border: none;
     background: #f8f8f8;
-    color: #15283c;
+    color: #02153f;
 }
 
 .table_row thead tr th {
@@ -2386,7 +2391,7 @@ h2.invoice_head small {
     font-size: 15px;
     font-weight: 500;
     padding: 14px 25px 14px;
-    color: #15283c;
+    color: #02153f;
     text-transform: uppercase;
 }
 
@@ -2700,7 +2705,7 @@ ul.labels-info li a i {
     padding-top: 3px;
     text-transform: none;
     letter-spacing: 0;
-    color: #15283c;
+    color: #02153f;
     font-size: 21px;
 }
 
@@ -3239,7 +3244,7 @@ table.projects tr td:first-child {
 }
 
 .table.projects thead.thead-dark th {
-    background: #15283c;
+    background: #02153f;
     font-weight: 300;
     padding: 15px 15px;
 }
@@ -3415,4 +3420,9 @@ table.projects tr td:first-child {
 #map {
     height: 100%;
     min-height: 720px;
+}
+
+#focus {
+    color: navy !important;
+    font-style: oblique;
 }

@@ -1,5 +1,4 @@
-flask
-cs50
+Flask
 gunicorn
 psycopg2
 requests

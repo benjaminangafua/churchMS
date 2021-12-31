@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <!-- site metas -->
-    <title>CHURCH MANAGEMENT SYSTEM</title>
+    <title>Ekklesia</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -45,7 +45,7 @@
             background-color: rgb(241, 227, 18) !important;
         }
     </style>
-    {% block fontawesome5 %} {% endblock %}
+
     <link rel="stylesheet" href="{{url_for('static', filename='css/responsive.css')}}" />
 </head>
 
@@ -65,7 +65,7 @@
                         <div class="user_profle_side">
                             <div class="user_img"><img class="img-responsive" src="{{url_for('static', filename='images/layout_img/user_img.jpg')}}" alt="#" /></div>
                             <div class="user_info">
-                                <h6>John David</h6>
+                                <h6>Ben Arku</h6>
                                 <p><span class="online_animation"></span> Online</p>
                             </div>
                         </div>
@@ -94,15 +94,15 @@
                             <ul class="collapse list-unstyled" id="apps">
                                 <li><a href="/email">> <span>Email</span></a></li>
                                 <li><a href="/calendar">> <span>SMS</span></a></li>
-                                <li><a href="/media_gallery">> <span>Alert</span></a></li>
+                                <li><a href="/alert">> <span>Alert</span></a></li>
                             </ul>
                         </li>
 
                         <li><a href="#events" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-calendar purple_color2"></i> <span>Events</span></a>
                             <ul class="collapse list-unstyled" id="events">
                                 <li><a href="/birthday">> <span>Birthday</span></a></li>
-                                <li><a href="/sms">> <span>Wedding</span></a></li>
-                                <li><a href="/alert">> <span>Anniversary</span></a></li>
+                                <li><a href="/wedding">> <span>Wedding</span></a></li>
+                                <li><a href="/anniversary">> <span>Anniversary</span></a></li>
                             </ul>
                         </li>
 
@@ -134,13 +134,7 @@
                                     <a href="/profile">> <span>Profile</span></a>
                                 </li>
                                 <li>
-                                    <a href="/project">> <span>Projects</span></a>
-                                </li>
-                                <li>
                                     <a href="/login">> <span>Login</span></a>
-                                </li>
-                                <li>
-                                    <a href="/404_error">> <span>404 Error</span></a>
                                 </li>
                             </ul>
                         </li>
@@ -170,7 +164,7 @@
                                     </ul>
                                     <ul class="user_profile_dd">
                                         <li>
-                                            <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="{{url_for('static', filename='images/layout_img/user_img.jpg')}}" alt="#" /><span class="name_user">John David</span></a>
+                                            <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="{{url_for('static', filename='images/layout_img/user_img.jpg')}}" alt="#" /><span class="name_user">Ben Arku</span></a>
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" href="/profile">My Profile</a>
                                                 <a class="dropdown-item" href="/settings">Settings</a>

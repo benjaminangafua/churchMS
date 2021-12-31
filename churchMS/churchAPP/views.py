@@ -48,87 +48,6 @@ def index():
     
     return render_template("index.html", deparmentSum=deparmentSum, memberSum=memberSum)
 
-@views.route('/calendar')
-def calendar():
-    return render_template('calendar.html')
-
-@views.route('/charts')
-def charts():
-    return render_template('charts.html')
-
-@views.route('/dashboard_2')
-def dashboard_2():
-    return render_template('dashboard_2.html')
-
-@views.route('/contact')
-def contact():
-    return render_template('contact.html')
-
-@views.route('/dashboard')
-def dashboard():
-    return render_template('index.html')
-
-@views.route('/email')
-def email():
-    return render_template('email.html')
-
-@views.route('/media_gallery')
-def media_gallery():
-    return render_template('media_gallery.html')
-
-@views.route('/icons')
-def icons():
-    return render_template('icons.html')
-
-@views.route('/invoice')
-def invoice():
-    return render_template('invoice.html')
-
-@views.route('/login')
-def login():
-    return render_template('login.html')
-
-@views.route('/sign-up')
-def signUp():
-    return render_template('signUp.html')
-
-@views.route('/map')
-def map():
-    return render_template('map.html')
-
-@views.route('/price')
-def price():
-    return render_template('price.html')
-
-@views.route('/profile')
-def profile():
-    return render_template('profile.html')
-
-@views.route('/project')
-def project():
-    return render_template('project.html')
-
-@views.route('/settings')
-def setting():
-    return render_template('settings.html')
-
-@views.route('/table')
-def table():
-    return render_template('tables.html')
-
-@views.route('/people')
-def people():
-    return render_template('people.html')
-
-@views.route('/404_error')
-def d404_error():
-    return render_template('404_error.html')
-
-    # Members
-@views.route('/general-element')
-def general():
-    return render_template('general_elements.html')
-
 # New member creation
 @views.route('/add-new-member', methods=["GET", "POST"])
 def addNewMember():
@@ -254,10 +173,8 @@ def birthday():
         
     return render_template("birthday.html", member=birth_rec, thisMONTH=this_month, months=months)
 
-# attendaance
-# create attendance db
-# insert into attendance db name and date of member
 
+# create attendance db
 
 @views.route("/new-attendance", methods=["GET", "POST"])
 def takeAttendance():
@@ -280,7 +197,56 @@ def takeAttendance():
 
     return render_template("new-attendance.html", member_names=member_names)
 
-
 # Error message
 def apology(message):
     return render_template("apology.html", message=message)
+
+
+@views.route('/calendar')
+def calendar():
+    return render_template('calendar.html')
+
+@views.route('/charts')
+def charts():
+    return render_template('charts.html')
+
+@views.route('/contact')
+def contact():
+    return render_template('contact.html')
+
+@views.route('/dashboard')
+def dashboard():
+    return render_template('index.html')
+
+@views.route('/email')
+def email():
+    return render_template('email.html')
+
+@views.route('/login')
+def login():
+    return render_template('login.html')
+
+@views.route('/sign-up')
+def signUp():
+    return render_template('signUp.html')
+
+@views.route('/map')
+def map():
+    return render_template('map.html')
+
+@views.route('/price')
+def price():
+    return render_template('price.html')
+
+@views.route('/profile')
+def profile():
+    return render_template('profile.html')
+
+
+@views.route('/settings')
+def setting():
+    return render_template('settings.html')
+
+@views.route('/table')
+def table():
+    return render_template('tables.html')

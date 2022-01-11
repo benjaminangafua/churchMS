@@ -13,14 +13,15 @@ def createChurchAccount():
         churchData["name"] = request.form.get("name")
         churchData["mail"] = request.form.get("mail")
         churchData["phone"] = request.form.get("phone")
+        churchData["bankNo"] = request.form.get("bankNo")
         churchData["code"] = int(request.form.get("code"))
         if len(data) > 0:
             for name in data:
                 if name["name"]==churchData["name"]:
                     message =  "Church already exist"
                     apology(message)
-        db.execute("INSERT INTO account(name, code, email, phone) VALUES(?, ?, ?, ?)",
-                    churchData["name"], churchData["code"], churchData["mail"],  churchData["phone"])
+        db.execute("INSERT INTO account(name, code, email, phone, bank_account) VALUES(?, ?, ?, ?, ?)",
+                    churchData["name"], churchData["code"], churchData["mail"], churchData["phone"],  churchData["bankNo"])
         return redirect("/home")   
     return render_template("create.church.html")     
 # home
@@ -211,7 +212,10 @@ def apology(message):
 
 # Offering
 def payOffering():
+    if request.method == "POST":
+        offering={}
     return render_template("offering.html")
+    
 # ------------------------------
 # communication | Finance
 # -------------------------------

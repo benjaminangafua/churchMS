@@ -117,6 +117,6 @@ def setting():
 def table():
     return render_template('tables.html')
 # offering
-@views.route('/offering')
+@views.route('/offering', methods=["GET", "POST"])
 def getOffering():
     return payOffering()

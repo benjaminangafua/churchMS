@@ -214,8 +214,23 @@ def apology(message):
 def payOffering():
     if request.method == "POST":
         offering={}
+        if request.method == "POST":
+            offering["name"] = request.form.get("name")
+            offering["amount"] = request.form.get("amount")
+            
     return render_template("offering.html")
-    
+
+
+# member_name VARCHAR(50), 
+# due NUMERIC, 
+# offering NUMERIC, 
+# donation NUMERIC, 
+# tithe NUMERIC,
+# account INTEGER,
+# mobile_number TEXT,
+# pay_day
+
+
 # ------------------------------
 # communication | Finance
 # -------------------------------
